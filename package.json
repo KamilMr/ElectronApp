@@ -1,0 +1,14 @@
+{
+  "name": "first",
+  "version": "1",
+  "description": "First app with Gui",
+  "main": "index.js",
+  "author": "Kamil Mrowka",
+  "license": "MIT",
+  "dependencies": {
+    "electron": "5.0.6"
+  },
+  "scripts": {
+    "start": "electron main.js"
+    }
+}
