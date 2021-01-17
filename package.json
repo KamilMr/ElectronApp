@@ -1,14 +1,16 @@
 {
-  "name": "first",
-  "version": "1",
-  "description": "First app with Gui",
+  "name": "initial",
+  "version": "1.0.0",
   "main": "index.js",
-  "author": "Kamil Mrowka",
   "license": "MIT",
-  "dependencies": {
-    "electron": "5.0.6"
-  },
   "scripts": {
     "start": "electron main.js"
-    }
+  },
+  "dependencies": {
+    "electron": "^5.0.7",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-redux": "^7.2.2",
+    "redux": "^4.0.5"
+  }
 }
