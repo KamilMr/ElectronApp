@@ -18,30 +18,43 @@ class App extends React.Component {
     super(props);
     this.state = { 
       status: 'off',
+      time: 0,
+      timer: null
     };
   }
 
   tick() {
-    if (this.state.time > 0){
-      this.setState(() => ({time: this.state.time -1}))
-    }
-    if (this.state.time == 0){
+    const audioElement = new Audio('./sounds/bell.wav');
+    this.setState(() => ({time: this.state.time -1}));
+    if (this.state.time == 0 && this.state.status === 'work'){
       this.setState(() => ({time: this.state.time -1,
-      status: 'rest', time: 20}))
+        status: 'rest', time: 20}))
+        audioElement.play();
+      }
+      if (this.state.time == 0 && this.state.status === 'rest'){
+        this.setState(() => ({time: this.state.time -1,
+          status: 'work', time: 1200}))
+          audioElement.play();
     }
   }
   
   componentDidMount() {
-      this.timer = setInterval(() => this.tick(), 1000);
+    this.state.timer = setInterval(() => this.tick(), 1000);
   }
 
   
   startTimer = () => {
-    this.setState( () => ({status: 'work', time: 3}));
+    this.setState( () => ({status: 'work', time: 1200}));
+    this.playAudio
   }
   
   stopTimer = () => {
-    this.setState( () => ({status: 'off', time: 3}));
+    this.setState( () => ({status: 'off', time: 1200}));
+  }
+ 
+
+  closeApp = () => {
+    window.close();
   }
   
   formatTime = (data) => { 
@@ -56,31 +69,18 @@ class App extends React.Component {
   render() {
     return (
       <div>
+        <h1>Protect your eyes</h1>
         {(this.state.status === 'off') && <AppDescription />}
         {(this.state.status === 'work') && <img src="./images/Work.png" />}
         {(this.state.status === 'rest') && <img src="./images/Rest.png" />}
-        {(this.state.status === 'rest') && <div className="timer"> Rest: {this.formatTime(this.state.time)}  </div>}
-        {(this.state.status === 'work') && <div className="timer"> Work: {this.formatTime(this.state.time)}  </div>}
+        {(this.state.status === 'rest') && <div className="timer"> {this.formatTime(this.state.time)}  </div>}
+        {(this.state.status === 'work') && <div className="timer"> {this.formatTime(this.state.time)}  </div>}
         {(this.state.status === 'off') && <button className="btn start" onClick={this.startTimer}>Start</button>}
-        {(this.state.status === 'work, rest') && <button className="btn" onClick={this.stopTimer}>Stop</button>}
-        
-        
-        <button className="btn btn-close">X</button>
+        {(this.state.status === 'work' || this.state.status === 'rest') && <button className="btn" onClick={this.stopTimer}>Stop</button>}
+        <button className="btn btn-close" onClick={this.closeApp}>X</button>
       </div>
     )
   }
 };
 
-
-
 render(<App />, document.querySelector('#app'));
-
-
-/* Pytanie
-
-const prepareOutputFilename = (filename) => {
-  const [ name, ext ] = filename.split('.');
-  return `${wstaw zawartość zmiennej name}-with-watermark.${ext}`;
-};
-
-*/
